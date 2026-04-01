@@ -8,6 +8,7 @@ import java.util.Scanner;
 import model.entities.Contract;
 import model.entities.Installment;
 import model.services.ContractService;
+import model.services.PaypalService;
 
 public class Program {
 	
@@ -32,13 +33,12 @@ public class Program {
 		System.out.print("Enter the number of installments: ");
 		Integer numberOfInstallments = sc.nextInt();
 		
-		ContractService servicePaypal = new ContractService();
+		ContractService servicePaypal = new ContractService(new PaypalService());
 		servicePaypal.processContract(contract, numberOfInstallments);
 		
 		System.out.println("Installments:");
-		for (Installment x : contract.getInstallment()) {
-			System.out.print(x.getDueDate().format(fmt) + " - ");
-			System.out.println(String.format("%.2f", x.getAmount()));
+		for (Installment installment : contract.getInstallment()) {
+			System.out.print(installment);
 		}
 		
 		
